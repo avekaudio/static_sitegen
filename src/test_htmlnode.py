@@ -1,5 +1,6 @@
 import unittest
 from htmlnode import HTMLNode, LeafNode, ParentNode
+from textnode import *
 
 class TestHTMLNode(unittest.TestCase):
     def test_propstohtml(self):
@@ -54,6 +55,9 @@ class TestParentNOde(unittest.TestCase):
 
         self.assertEqual(node.to_html(), "<p><b>Bold text</b>Normal text<i>italic text</i>Normal text</p>")
         
+
+
+    
         
 
     
