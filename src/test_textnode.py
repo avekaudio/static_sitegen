@@ -19,5 +19,8 @@ class TestTextNode(unittest.TestCase):
         node2 = TextNode("This is text", TextType.CodeText, "https://youtube.com")
         self.assertNotEqual(node, node2)
 
+    def text_node_to_html_node(text_node):
+        
+
 if __name__ == "__main__":
     unittest.main()
