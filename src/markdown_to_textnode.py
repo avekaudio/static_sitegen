@@ -1,10 +1,12 @@
 from textnode import TextNode, TextType, text_node_to_html_node
+import re
+
+
 def split_nodes_delimiter(old_nodes, delimiter, text_type):
     if not isinstance(old_nodes, list):
         old_nodes = [old_nodes]
     result= []
     for old_node in old_nodes:
-        # If the node isn't a text type, just add it unchanged
         if old_node.text_type != TextType.NormalText:
             result.append(old_node)
             continue  # Skip to next node
@@ -42,5 +44,14 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
 
             remaining_text = remaining_text[end_index + len(delimiter):]
     return result
+
+def extract_markdown_images(text):
+    return re.findall(r"!\[([^\[\]]*)\]\(([^\(\)]*)\)", text)
+
+def extract_markdown_links(text):
+    return re.findall(r"(?<!!)\[([^\[\]]*)\]\(([^\(\)]*)\)", text)
+
+
+
 
             
