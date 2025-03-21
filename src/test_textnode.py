@@ -2,6 +2,7 @@ import unittest
 
 from textnode import TextNode, TextType, text_node_to_html_node
 from htmlnode import HTMLNode, LeafNode, ParentNode
+from markdown_to_textnode import split_nodes_delimiter
 
 
 class TestTextNode(unittest.TestCase):
@@ -40,6 +41,26 @@ class TestConversion(unittest.TestCase):
         self.assertEqual(html_node.tag, "img")
         self.assertEqual(html_node.value, "")
         self.assertEqual(html_node.props, {"src": "https://youtube.com", "alt": "This is an image"})
+
+class TestMarkdowntoTextNode(unittest.TestCase):
+    def test_code_onedelim(self):
+        node = TextNode("This is text with a `code block` word", TextType.NormalText)
+        self.assertEqual(split_nodes_delimiter([node], "`", TextType.CodeText), [
+    TextNode("This is text with a ", TextType.NormalText),
+    TextNode("code block", TextType.CodeText),
+    TextNode(" word", TextType.NormalText),
+    ])
+    
+    def test_italic_twodelim(self):
+        node = TextNode("This is _italic_ text with a _second_ italic block",TextType.NormalText)
+        self.assertEqual(split_nodes_delimiter([node], "_", TextType.ItalicText), [
+            TextNode("This is ", TextType.NormalText),
+            TextNode("italic", TextType.ItalicText),
+            TextNode(" text with a ", TextType.NormalText),
+            TextNode("second", TextType.ItalicText),
+            TextNode(" italic block", TextType.NormalText)
+        ])
+        
 
 
 if __name__ == "__main__":
